@@ -1,0 +1,11 @@
+#Sprint Reflection
+
+The overall process of team formation went fairly smoothly. Some members had worked on previous projects together, so we knew that there was at least less possibility for working issues later on. In terms of how we addressed the actual individual goals, we went about it by first ideating potentional projects that we individually were interested in, and then as a team, voting on the idea that we thought was the most interesting and compelling. With that respect, we were able to at least try to find a team project idea that would match the ideas that individuals would be interested in. During the meeting that we voted on the ideas, we had also discussed the particular reason why we wanted to do that project, which helped to communicate parts of the learning goal. Our conversation with Ben was helpful because he helped us clarify what we might want to do for our project. 
+
+One thing that our team has yet to do is decide on a formal scrum master and delegate specific responsiblities outside of breaking our idea (p2p file transfer) into parts that indivuals could take in depending on interest. (i.e. the general networking aspect, the p2p aspect, the encoding of files idea, etc). This is an area that will need to be addressed soon.
+
+Prior to filling out the sprint backlog, we wanted to find resources that were relevant to networking and p2p, and so we spent a lot of time finding said resources. Our conclusion was that we wanted to use the first sprint to create a basic server-client communication program. 
+
+Consequently, when we were creating our first sprint backlog, we focused on adding readings that would cover network programming and additional research for how bittorrent works. Because we are still relatively new to this area of programming, we did not list very many specific tasks in our sprint backlog outside of research. I am under the impression that we will likely be filling the sprint backlog today/tommorow with more specific tasks after we create a system diagram to unify our vision for what our deliverable will be. 
+
+In terms of apprehensions, I am a little concerned the lack of specific tasks right now, but that will hopefully be addressed in the coming days. Furthermore, the lack of concrete delegation of roles is another potential area of concern, but that will hopefully be addressed later. 

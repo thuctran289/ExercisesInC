@@ -79,21 +79,17 @@ void count_cards(int *count, int val){
 int main()
 {
 	/*/Allocating some memory a pointer for card_name. 
-	 Issues w/ trying to set up card_name as an independant thing. 
-	*/
+	 Issues w/ trying to set up card_name as an independant thing. */
 	char* card_name = (char *) malloc(sizeof(char)*2);
 	int* count = (int *) malloc(sizeof(int));
 	bool* flag = (bool*) malloc(sizeof(bool));
 	*flag = false;
-	/*Continue looping through the program.
-	*/
+	/*Continue looping through the program.*/
 	while(*flag == false){
 		get_card(card_name);
-		count_cards(count, get_card_val(card_name, flag));	
+		count_cards(count, get_card_val(card_name, flag));
 	}
-
-	/*Cleaning up flag memory usage prior to program end. 
-	*/
+	/*Cleaning up flag memory usage prior to program end. 	*/
 	free(flag);
 	free(count);
 	free(card_name);
