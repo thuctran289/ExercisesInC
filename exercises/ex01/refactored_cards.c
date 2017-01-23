@@ -33,7 +33,9 @@ This also frees the card_name memory usage.
 */
 int get_card_val(char* card_name, bool* flag){
 	int val = 0;
-	switch(card_name[0])
+	//Determines value of card, with face cards = 10, A = 11, and otherwise 
+	//using char to integer (Atoi) to determine value. 
+	switch(card_name)
 		{
 			case 'K':
 			case 'Q':
@@ -60,10 +62,11 @@ If val is within range 3-6, this increases the count.
 Otherwise, if val == 10, this decreases the count. 
 */ 
 void count_cards(int *count, int val){
-
+	//If value is between 3 and 6, increase count. 
 	if ((val>2) && (val <7)){
 		(*count)++;
 	} else if(val == 10){
+		//if value is a facecard or 10, decrease count
 		(*count) --;
 	}
 	printf("Current Count: %i\n", *count);	
