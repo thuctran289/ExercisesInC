@@ -132,41 +132,38 @@ int main(int argc, char *argv[])
 
     char buf[255];
 
-    while (1) {
-	connect_d = open_client_socket();
+    while (1) { 
+        connect_d = open_client_socket();
 
+        if(!fork()){
+            close(listener_d);
+        	if (say(connect_d, intro_msg) == -1) {
+	        close(connect_d);
+	        return 0;
+	        }
 
-    if(!fork())
-    {
-        close(listener_d);
-
-    	if (say(connect_d, intro_msg) == -1) {
-	       close(connect_d);
-	     exit(0);
-	    }
-
-    	read_in(connect_d, buf, sizeof(buf));
-	   // check to make sure they said "Who's there?"
+        	read_in(connect_d, buf, sizeof(buf));
+	        // check to make sure they said "Who's there?"
 	
-    	if (say(connect_d, "Surrealist giraffe.\n") == -1) {
-	       close(connect_d);
-	       exit(0);
-	    }
+        	if (say(connect_d, "Surrealist giraffe.\n") == -1) {
+	        close(connect_d);
+	        return 0;
+	        }
 
-    	read_in(connect_d, buf, sizeof(buf));
-	    // check to make sure they said "Surrealist giraffe who?"
+        	read_in(connect_d, buf, sizeof(buf));
+	        // check to make sure they said "Surrealist giraffe who?"
 
  
-    	if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
-	       close(connect_d);
-	       exit(0);
-	    }
+        	if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
+	        close(connect_d);
+	        return 0;
+	        }
 
-    	close(connect_d);
-        exit(0);
-      }
+    	    close(connect_d);
+            return 0;
+        }
+
     }
-    close(connect_d);
-       
-      return 0;
+
+    return 0;
 }
