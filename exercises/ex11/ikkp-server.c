@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 	}
 
 	read_in(connect_d, buf, sizeof(buf));
-	// check to make sure they said "Who's there?"
+	// check to make sure they said "Who's there?" 
 	
 	if (say(connect_d, "Surrealist giraffe.\n") == -1) {
 	    close(connect_d);

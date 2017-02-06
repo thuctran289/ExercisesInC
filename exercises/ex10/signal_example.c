@@ -25,6 +25,7 @@ int catch_signal(int sig, void (*handler) (int)) {
     action.sa_handler = handler;
     sigemptyset(&action.sa_mask);
     action.sa_flags = 0;
+
     return sigaction(sig, &action, NULL);
 }
 
@@ -33,9 +34,30 @@ void end_game(int sig)
     printf("\nFinal score: %i\n", score);
     exit(EXIT_SUCCESS);
 }
-
+//This gets called back when alarm goes off 
 void times_up(int sig) {
-    puts("\nTIME'S UP!");
+        puts("\nTIME'S UP!\n");
+
+        //Print new line for final round.
+        puts("FINAL ROUND\n");
+        //Run through generating another set of 
+        //variables that can be used for question
+        int a, b, answer;
+        a = rand() % 11;
+        b = rand() % 11;
+        
+        char txt[4];
+        //Print question to screen
+        printf("\nWhat is %d times %d? ", a, b);
+        fgets(txt, 4, stdin);
+        answer = atoi(txt);
+        //Addes to score.
+        if (answer == a * b) {
+            score++;
+        } else {
+            printf("\nWrong! Score: %i\n", score);
+        }
+
     raise(SIGINT);
 }
 
