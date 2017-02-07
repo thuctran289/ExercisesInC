@@ -1,7 +1,7 @@
 ###Written Reflection
 some reflectioning. -> 30 minutes. 
 ###Solutions for HFC 2,3, 10, 11
-
+Note that I had generally written in-line w/ the exercise description file and the actual code. 
 [Chapter 2](../exercises/ex02)
 [Chapter 3](../exercises/ex03)
 [Chapter 10](../exercises/ex10)

@@ -8,7 +8,19 @@ https://raw.githubusercontent.com/twcamper/head-first-c/master/10/math-master.c
 
 Based on an example in Head First C.
 
+Overall description of this part of the program:
+
+Basically the action that I needed to know was that the catch_signal function 
+lets a function be called be on a signal. In this case, we had an signal set for when
+five seconds past using alarm and an signal for program interrupts. Due to the times up and 
+end game functions being defined, the action that I needed to do to fulfill the goals of the
+exercise was to add additional code in the text of the times_up function 
+
 */
+
+
+
+
 
 #include <stdio.h>
 #include <stdlib.h>
