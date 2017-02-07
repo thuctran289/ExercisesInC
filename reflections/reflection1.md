@@ -8,5 +8,4 @@ Do 1,2,3,4 (30 Minutes each)
 
 ### Exam Question:
 
-See Exam folder: 
-[../Exam]
+[See Exam folder](../Exam)
