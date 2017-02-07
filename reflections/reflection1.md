@@ -43,7 +43,10 @@ accomplish a few of our stretch goals (fingers crossed)
 
 
 ###Solutions for HFC 2,3, 10, 11
-Note that I had generally written in-line w/ the exercise description file and the actual code. 
+Note that I had generally written in-line w/ the exercise description file and the actual code. Also note that 
+I had written up chapter 10 instead of chapter 1, due to doing chapter 1 at a different time prior to knowing 
+the format of how to turn it in. I will likely be doing that for a following sprint. (I had written comments at the 
+top of each assembly instruction out. )
 
 [Chapter 2](../exercises/ex02)
 
