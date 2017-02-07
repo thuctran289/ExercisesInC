@@ -1,0 +1,76 @@
+Stack
+s3 = ptr to "oh hello world3" in literals
+s4 = "oh hello world4" in place
+
+Heap:
+s5 = due to being malloced via foo
+s6 = due to being malloced by foo. 
+
+Global
+s1 = ptr to "hello world1" in literals
+s2 = "hello world1" in place
+
+
+Literal:
+"hello world1"
+"hello"
+"Oh hello world3"
+
+
+Output:
+
+Hello world2
+8 // due to trying to print size of a pointer
+16 // due to trying to print array
+Oh Hello // Due to the interior use of sizeof in function foo reads size of a pointer for char *
+Oh Hello // Due to the interior use of sizeof in function foo reads size of a pointer for char arrays
+hello //Actually prints because "hello" even though no malloc because "hello" is a string literal in global.
+
+Annotated:
+
+//For the following code, print the output, and approximate locations in memory for each 
+//variable that begins with an s!
+//Most of this should be doable using HFC2.
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+//Replaced with a string literal location
+char * s1 = "hello world1";
+//Is a char array that lives in globa. 
+char s2[] = "hello world2";
+
+char * foo(char str[]){
+	char * data = malloc(sizeof(str));
+	memcpy(data, str, sizeof(str));
+
+	return data;
+}
+
+char * bar(){
+	//returning not malloc'd things would be bad, but in this case, because "hello" is actually 
+	//stored in literals. ... Don't do this in actual code. 
+	char * data = "hello";
+	return data;
+}
+
+
+
+int main(int argc, char ** argv)
+{
+	// All the pointers below live in stack. 
+	char * s3 = "Oh hello world3";
+	char s4[] = "Oh hello world4";
+	printf("%s\n",s2);
+	printf("%d\n", sizeof(s3));
+	printf("%d\n", sizeof(s4));
+	char * s5 = foo(s3);
+	char * s6 = foo(s4);
+	printf("%s\n", s5);
+	printf("%s\n", s6);
+	char * s7 = bar();
+	printf("%s\n", s7);
+
+	return 0;
+}
