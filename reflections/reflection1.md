@@ -23,7 +23,7 @@ of discuss specific tasks that could be delegated still, but I still feel bad
 about how that worked out. As a result, I ended up as the network person for 
 the client side of the program which I am happy about, but I'm worried that
 the other people in my group who want to learn it won't get as much 
-opportunity to pick it up.. I think that moving forward we are going to try to
+opportunity to pick it up. I think that moving forward we are going to try to
 stay more synchronized w.r.t. things by doing more pair-programming meetings
 and trying to document code better. 
 
