@@ -157,20 +157,43 @@ Also consider reading [this USENIX paper](https://www.usenix.org/legacy/event/us
 
 1) Suppose you have the value 128 stored as an unsigned 8-bit number.  What happens if you convert 
 it to a 16-bit number and accidentally apply sign extension?
+Given that 128 is 0b1000000 for unsigned numbers, then sign extension would actually cause the the number to be read as -128. The sign extension would hence cause the value to be 0b1111111110000000, which is still -128.
+
 
 2) Write a C expression that computes the two's complement of 12 using the XOR bitwise operator. 
 Try it out and confirm that the result is interpreted as -12.
 
+((12  ^ (-1)) + 1)
+This works. 
+
 3) Can you guess why IEEE floating-point uses biased integers to represent the exponent rather than a
 sign bit or two's complement?
+If I had to take a guess, it is easier to work with a biased integer due to letting things be done symmetrically around 127 on a fpu/hardware level. It may not be as space efficient as just using the already existing ALU, but there is still potential there. 
+
 
 4) Following the example in Section 5.4, write the 32-bit binary representation of -13 in single precision 
 IEEE floating-point.  What would you get if you accidentally interpreted this value as an integer?
+
+Representation is therefore:
+0b11000001010100000000000000000000
+
+This is -1051721728 as an integer. 
 
 5) Write a function that takes a string and converts from lower-case to upper-case by flipping the sixth bit.  
 As a challenge, you can make a faster version by reading the string 32 or 64 bits at a time, rather than one
 character at a time.  This optimization is made easier if the length of the string is a multiple of 4 or 8 bytes.
 
+void lower_to_upper(char * string, int sizeofstring)
+	{
+		int x = 0;
+		for (x = 0; x<sizeofstrings; x++)
+		{
+			*(string+x)  = *(string+x)^0b0100000;
+		}
+
+	}
+
+The way to do it with operations on 4 or eight bytes would probably be some kind of function that uses a union of an integer/long and the equivalent number of characters.
 
 
 ## Chapter 6
@@ -179,18 +202,23 @@ character at a time.  This optimization is made easier if the length of the stri
 ### Memory management
 
 1) Which memory management functions would you expect to take constant time?  Which ones take time proportional to the size of the allocated chunk?
+Assuming that sbrk is a constant time function, which I think it is due to it being a location of a stack, then I would expect malloc and free to be constant time due to basically just dealing with the validity of the space. It just handles the address + any metadata associated with it. This is in constrasts to realloc and calloc which would neccesitate actually iterating over each element in memory to either copy/zero it. 
+
 
 2) For each of the following memory errors, give an example of something that might go wrong:
 
 a) Reading from unallocated memory.
+You might be able to get a segfault which indicates access of an unauthorized piece of data. On the case where this doesn't happen, you might get values that are essentially garbage. These garbage values can do really strange stuff to the rest of the program because of the potential for invalid numbers. 
 
 b) Writing to unallocated memory.
+This may cause another issues with other memory due to possibly overwriting the data structures used to implement malloc and free ( the metadata).
 
 c) Reading from a freed chunk.
-
+See reading from unallocated memory.
 d) Writing to a freed chunk.
-
+See writing to unallocated memory.
 e) Failing to free a chunk that is no longer needed.
+You might have memory leaks, which if you are using a program that generates a lot of dynamic memory, then your computer can suffer in performance. I.E. malloc fails due to being out of physical memory, paging process pages from memorry to disk, etc. 
 
 
 3) Run
@@ -199,8 +227,9 @@ e) Failing to free a chunk that is no longer needed.
 
 to see a list of processes sorted by RSS, which is "resident set size", the amount of physical 
 memory a process has.  Which processes are using the most memory?
-
+Just taking a cursory look, the main processes that are using a lot of memory are programs that have a graphical interface or gui, which makes sense due to them needing to contain the information about every pixel that they are dimensioned for. 
 4) What's wrong with allocating a large number of small chunks?  What can you do to mitigate the problem?
+You can get issues associated with fragmentation. Esseentially, the heap will be broken up into a bunch of small free pieces due to malloc and freeing pieces. As a result, this can slow programs down by making memory less effective. A way of handling this is minimizing the number of small mallocs you do that are freed at different times. 
 
 If you want to know more about how malloc works, read 
 [Doug Lea's paper about dlmalloc](http://gee.cs.oswego.edu/dl/html/malloc.html)

@@ -45,8 +45,6 @@ void print_list(Node **list) {
     }
     printf("]\n");
 }
-
-
 /* Removes and returns the first element of a list.
  * 
  * list: pointer to pointer to Node
@@ -54,17 +52,14 @@ void print_list(Node **list) {
  * returns: int or -1 if the list is empty
  */
 int pop(Node **list) {
-    // FILL THIS IN!
     if(*list == NULL)
         return -1;
     int value = (*list)->val;
     Node * node_to_delete = *list;
-
     *list = (*list)->next;
     free(node_to_delete);
     return value;
 }
-
 
 /* Adds a new element to the beginning of the list.
  * 
@@ -74,10 +69,7 @@ int pop(Node **list) {
 void push(Node **list, int val) {
     Node * new_node = make_node(val, (*list));
     *list = new_node;
-    // FILL THIS IN!
 }
-
-
 /* Removes the first element with the given value
  * 
  * Frees the removed node.
@@ -88,11 +80,34 @@ void push(Node **list, int val) {
  * returns: number of nodes removed
  */
 int remove_by_value(Node **list, int val) {
-
-
+    Node * nextNode, *currNode;
+    currNode = *list;
+    while((*currNode).next!= NULL){
+        if(currNode->next->val == val)
+            {nextNode = currNode->next;
+            currNode->next = currNode->next->next;
+            free(nextNode);
+                return 1;
+            }
+        currNode = (*currNode).next;
+    }
     return 0;
+
 }
 
+
+Node* reverse_helper(Node **list, Node * tail_node)
+{
+    if((*list)->next==NULL){
+        (*list)->next = tail_node;
+        return *list;
+    }
+    Node * currNode = *list;
+    Node * nextNode = (*list)->next;
+    currNode->next = tail_node;
+    return reverse_helper(&nextNode, currNode);
+
+}
 
 /* Reverses the elements of the list.
  *
@@ -101,7 +116,7 @@ int remove_by_value(Node **list, int val) {
  * list: pointer to pointer to Node
  */
 void reverse(Node **list) {
-    // FILL THIS IN!
+    *list =reverse_helper(list, NULL);
 }
 
 
@@ -110,13 +125,14 @@ int main() {
     head->next = make_node(2, NULL);
     head->next->next = make_node(3, NULL);
     head->next->next->next = make_node(4, NULL);
-
+    head->next->next->next->next = make_node(7, NULL);
     Node **list = &head;
-    print_list(list);
+   print_list(list);
 
     int retval = pop(list);
     print_list(list);
 
+    
     push(list, retval+10);
     print_list(list);
 
