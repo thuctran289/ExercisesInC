@@ -10,8 +10,9 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define NUM_CHILDREN 2
+#define NUM_CHILDREN 5
 
+int x;
 // UTILITY FUNCTIONS
 
 /*  perror_exit
@@ -74,12 +75,15 @@ int sem_signal(Semaphore *sem)
     return sem_post(sem);
 }
 
+
+
 // Shared
 
 typedef struct {
     int counter;
     int end;
     int *array;
+    Semaphore *sem;
 } Shared;
 
 /*  make_shared
@@ -94,7 +98,7 @@ Shared *make_shared (int end)
 {
     int i;
     Shared *shared = check_malloc (sizeof (Shared));
-
+    shared->sem = make_semaphore(1);
     shared->counter = 0;
     shared->end = end;
   
@@ -155,18 +159,23 @@ void join_thread (pthread_t thread)
 void child_code (Shared *shared)
 {
     printf ("Starting child at counter %d\n", shared->counter);
-
+    
     while (1) {
 	    if (shared->counter >= shared->end) {
 	        return;
 	    }
+	    sem_wait(shared->sem);
 	    shared->array[shared->counter]++;
 	    shared->counter++;
 
 	    if (shared->counter % 100000 == 0) {
 	        printf ("%d\n", shared->counter);
 	    }
+	    sem_signal(shared->sem);
+
     }
+
+    
 }
 
 /*  entry
@@ -211,6 +220,7 @@ void check_array (Shared *shared)
  */
 int main ()
 {
+	x = 0;
     int i;
     pthread_t child[NUM_CHILDREN];
 
