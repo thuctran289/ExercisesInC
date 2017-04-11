@@ -1,6 +1,9 @@
 /* Simple example using Glib.
 
-From http://www.ibm.com/developerworks/linux/tutorials/l-glib/
+This program takes in a filename as an arguement, and counts the 
+number of times each word in the file appears. 
+Written by Thuc Tran
+
 
 */
 
