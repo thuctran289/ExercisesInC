@@ -10,8 +10,9 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define NUM_CHILDREN 2
+#define NUM_CHILDREN 5
 
+int x;
 // UTILITY FUNCTIONS
 
 /*  perror_exit
@@ -74,13 +75,15 @@ int sem_signal(Semaphore *sem)
     return sem_post(sem);
 }
 
+
+
 // Shared
 
 typedef struct {
     int counter;
     int end;
     int *array;
-    Semaphore* sem;
+    Semaphore *sem;
 } Shared;
 
 /*  make_shared
@@ -95,8 +98,8 @@ Shared *make_shared (int end)
 {
     int i;
     Shared *shared = check_malloc (sizeof (Shared));
-
-    shared->sem = make_semaphore(0);
+    //Set up a semaphore. 
+    shared->sem = make_semaphore(1);
     shared->counter = 0;
     shared->end = end;
   
@@ -157,19 +160,20 @@ void join_thread (pthread_t thread)
 void child_code (Shared *shared)
 {
     printf ("Starting child at counter %d\n", shared->counter);
-
+    
     while (1) {
-        
-	    if (shared->counter >= shared->end) {
-	        return;
-	    }
-	    shared->array[shared->counter]++;
-	    shared->counter++;
+        if (shared->counter >= shared->end) {
+            return;
+        }
+        //Waiting for signal 
+        sem_wait(shared->sem);
+        shared->array[shared->counter]++;
+        shared->counter++;
+        sem_signal(shared->sem);
 
-	    if (shared->counter % 100000 == 0) {
-	        printf ("%d\n", shared->counter);
-	    }
     }
+
+    
 }
 
 /*  entry
@@ -202,7 +206,7 @@ void check_array (Shared *shared)
     printf ("Checking...\n");
 
     for (i=0; i<shared->end; i++) {
-	    if (shared->array[i] != 1) errors++;
+        if (shared->array[i] != 1) errors++;
     }
     printf ("%d errors.\n", errors);
 }
@@ -214,19 +218,21 @@ void check_array (Shared *shared)
  */
 int main ()
 {
+    x = 0;
     int i;
     pthread_t child[NUM_CHILDREN];
 
-    Shared *shared = make_shared (100000000);
+    Shared *shared = make_shared (10000000);
 
     for (i=0; i<NUM_CHILDREN; i++) {
-	child[i] = make_thread (entry, shared);
+    child[i] = make_thread (entry, shared);
     }
 
     for (i=0; i<NUM_CHILDREN; i++) {
-	    join_thread (child[i]);
+        join_thread (child[i]);
     }
 
     check_array (shared);
     return 0;
 }
+
