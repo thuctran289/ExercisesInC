@@ -38,11 +38,12 @@ int pop(Node **head) {
     if (*head == NULL) {
         return -1;
     }
-
+    Node *curr_node = *head;
     next_node = (*head)->next;
     retval = (*head)->val;
     *head = next_node;
 
+    free(curr_node);
     return retval;
 }
 
@@ -161,7 +162,10 @@ int main() {
     print_list(empty);
 
     Node *something = make_something();
-    free(something);
+
+    free(empty);
+    while(pop(&something)!=-1);
+    while(pop(&test_list)!=-1);
 
     return 0;
 }
