@@ -39,6 +39,7 @@ void pair_printor (gpointer value, gpointer user_data)
     printf ("%d\t %s\n", pair->freq, pair->word);
 }
 
+/* Iterator that information in a pair*/
 void pair_destroy(gpointer value, gpointer Pair)
 {   
     g_free(value);
@@ -103,6 +104,7 @@ int main (int argc, char** argv)
        (one-L) NUL terminated strings */
     gchar **array;
     gchar line[128];
+    //Add functions to free the key and value. 
     GHashTable* hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
     int i;
 
@@ -115,6 +117,7 @@ int main (int argc, char** argv)
 	for (i=0; array[i] != NULL; i++) {
 	    incr(hash, array[i]);
 	}
+    //Free results from string split. 
     g_strfreev(array);
     
     }
